@@ -4,6 +4,7 @@ import (
 	"flag"
 	"fmt"
 	"github.com/NatasMeister/funtemps/conv"
+	"github.com/NatasMeister/funtemps/funfacts"
 )
 
 // Definerer flag-variablene i hoved-"scope"
@@ -11,7 +12,7 @@ var fahr float64
 var celsius float64
 var kelvin float64
 var out string
-var funfacts string
+var ff string
 var tempScale string
 
 // Bruker init (som anbefalt i dokumentasjonen) for å sikre at flagvariablene
@@ -30,9 +31,8 @@ func init() {
 	flag.Float64Var(&celsius, "C", 0.0, "temperatur i grader celsius")
 	flag.Float64Var(&kelvin, "K", 0.0, "temperatur i grader kelvin")
 	flag.StringVar(&out, "out", "C", "beregne temperatur i C - celsius, F - farhenheit, K- Kelvin")
-	flag.StringVar(&funfacts, "funfacts", "sun", "\"fun-facts\" om sun - Solen, luna - Månen og terra - Jorden")
+	flag.StringVar(&ff, "ff", "sun", "\"fun-facts\" om sun - Solen, luna - Månen og terra - Jorden")
 	flag.StringVar(&tempScale, "t", "C", "temperaturskala for visning av fun-facts. Kan være C - celsius, F - farhenheit, K - kelvin")
-	// hvilken temperaturskala skal brukes når funfacts skal vises
 
 }
 
@@ -50,8 +50,8 @@ func main() {
 		return
 	}
 
-	if isFlagPassed("funfacts") && !isFlagPassed("t") {
-		fmt.Println("-funfacts kan kun brukes med -t.")
+	if isFlagPassed("ff") && !isFlagPassed("t") {
+		fmt.Println("-ff kan kun brukes med -t.")
 		return
 	}
 
@@ -70,7 +70,7 @@ func main() {
 		fmt.Printf("%.2f°C er %.2fK\n", fahr, kelvin)
 	}
 
-	if isFlagPassed("funfacts") && isFlagPassed("t") {
+	if isFlagPassed("ff") && isFlagPassed("t") {
 		funFact := funfacts.GetFunFacts("luna")
 		fmt.Println(funFact)
 	}
@@ -84,11 +84,11 @@ func main() {
 }
 
 func isFlagPassed(name string) bool {
-    found := false
-    flag.Visit(func(f *flag.Flag) {
-        if f.Name == name {
-            found = true
-        }
-    })
-    return found
+	found := false
+	flag.Visit(func(f *flag.Flag) {
+		if f.Name == name {
+			found = true
+		}
+	})
+	return found
 }
