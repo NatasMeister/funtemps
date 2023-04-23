@@ -8,7 +8,7 @@ import (
 )
 
 // Definerer flag-variablene i hoved-"scope"
-var fahr float64
+var fahrenheit float64
 var celsius float64
 var kelvin float64
 var out string
@@ -27,7 +27,7 @@ func init() {
 	*/
 
 	// Definerer og initialiserer flagg-variablene
-	flag.Float64Var(&fahr, "F", 0.0, "temperatur i grader fahrenheit")
+	flag.Float64Var(&fahrenheit, "F", 0.0, "temperatur i grader fahrenheit")
 	flag.Float64Var(&celsius, "C", 0.0, "temperatur i grader celsius")
 	flag.Float64Var(&kelvin, "K", 0.0, "temperatur i grader kelvin")
 	flag.StringVar(&out, "out", "C", "beregne temperatur i C - celsius, F - farhenheit, K- Kelvin")
@@ -56,18 +56,39 @@ func main() {
 	}
 
 	if isFlagPassed("F") {
-		celsius := conv.FahrenheitToCelsius(fahr)
-		fmt.Printf("%.2f°F er %.2f°C\n", fahr, celsius)
+		if out == "C" {
+			celsius := conv.FahrenheitToCelsius(fahrenheit)
+			fmt.Printf("%.2f°F is %.2f°C\n", fahrenheit, celsius)
+		} else if out == "K" {
+			kelvin := conv.FahrenheitToKelvin(fahrenheit)
+			fmt.Printf("%.2f°F is %.2fK\n", fahrenheit, kelvin)
+		} else {
+			fmt.Println("Invalid temperature scale. Please use C, F, or K.")
+		}
 	}
 
 	if isFlagPassed("C") {
-		fahrenheit := conv.CelsiusToFahrenheit(fahr)
-		fmt.Printf("%.2f°C er %.2f°F\n", fahr, fahrenheit)
+		if out == "F" {
+			fahrenheit := conv.CelsiusToFahrenheit(celsius)
+			fmt.Printf("%.2f°C is %.2f°F\n", celsius, fahrenheit)
+		} else if out == "K" {
+			kelvin := conv.CelsiusToKelvin(celsius)
+			fmt.Printf("%.2f°C is %.2fK\n", celsius, kelvin)
+		} else {
+			fmt.Println("Invalid temperature scale. Please use C, F, or K.")
+		}
 	}
 
 	if isFlagPassed("K") {
-		kelvin := conv.CelsiusToKelvin(fahr)
-		fmt.Printf("%.2f°C er %.2fK\n", fahr, kelvin)
+		if out == "C" {
+			celsius := conv.KelvinToCelsius(kelvin)
+			fmt.Printf("%.2fK is %.2f°C\n", kelvin, celsius)
+		} else if out == "F" {
+			fahrenheit := conv.KelvinToFahrenheit(kelvin)
+			fmt.Printf("%.2fK is %.2f°F\n", kelvin, fahrenheit)
+		} else {
+			fmt.Println("Invalid temperature scale. Please use C, F, or K.")
+		}
 	}
 
 	if isFlagPassed("ff") && isFlagPassed("t") {
