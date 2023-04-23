@@ -12,7 +12,7 @@ package conv
 */
 
 // Konverterer Farhenheit til Celsius
-func FarhenheitToCelsius(value float64) float64 {
+func FahrenheitToCelsius(value float64) float64 {
 	return (value - 32) * (5.0 / 9.0)
 }
 
@@ -24,14 +24,14 @@ func CelsiusToKelvin(value float64) float64 {
 	return (value + 273.15)
 }
 
-func CelsiusToFarhenheit(value float64) float64 {
+func CelsiusToFahrenheit(value float64) float64 {
 	return (value * (9.0 / 5.0) + 32)
 }
 
-func KelvinToFarhenheit(value float64) float64 {
+func KelvinToFahrenheit(value float64) float64 {
 	return (value - 273.15) * (9.0 / 5.0) + 32
 }
 
-func FarhenheitToKelvin(value float64) float64 {
+func FahrenheitToKelvin(value float64) float64 {
 	return (value - 32) * (5.0 / 9.0) + 273.15
 }
